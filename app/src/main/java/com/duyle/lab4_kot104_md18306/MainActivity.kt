@@ -81,6 +81,13 @@ fun LoginScreen(startForResult: ActivityResultLauncher<Intent>?, navController: 
     val context = LocalContext.current // getApplicationContext()
     var userName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    val msg =
+        navController.currentBackStackEntry?.savedStateHandle?.get<String>("msg")
+    if (msg != null) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+    }
+
     Column (
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -116,6 +123,8 @@ fun LoginScreen(startForResult: ActivityResultLauncher<Intent>?, navController: 
 
                 //startForResult?.launch(intent)
                 //context.startActivity(intent)
+
+
 
                 navController.navigate("${NavigationItem.Home.route}/$userName/$password")
 

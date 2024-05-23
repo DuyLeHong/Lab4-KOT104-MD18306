@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +24,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 class Bai2Activity : ComponentActivity() {
     override fun onBackPressed() {
@@ -45,13 +48,13 @@ class Bai2Activity : ComponentActivity() {
 
         setContent {
 
-            Page2(nhanvienModel)
+            Page2(nhanvienModel, rememberNavController())
         }
     }
 }
 
 @Composable
-fun Page2(nhanvienModel: NhanvienModel) {
+fun Page2(nhanvienModel: NhanvienModel, navController: NavHostController) {
 
     val listImg = listOf(R.drawable.images1, R.drawable.images2, R.drawable.images3)
 
@@ -66,7 +69,16 @@ fun Page2(nhanvienModel: NhanvienModel) {
 
         Text(text = nhanvienModel.username,
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(start = 16.dp))
+            modifier = Modifier
+                .padding(start = 16.dp)
+                .clickable {
+
+                    navController.previousBackStackEntry?.savedStateHandle?.set(
+                        "msg",
+                        "data tu man hinh 2"
+                    )
+                    navController.popBackStack()
+                },)
 
         HorizontalImageList(imageList = listImg)
         VerticalImageList(imageList = listImg)

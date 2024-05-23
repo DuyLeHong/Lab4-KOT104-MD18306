@@ -1,6 +1,5 @@
 package com.duyle.lab4_kot104_md18306
 
-import android.window.SplashScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
@@ -38,7 +37,7 @@ fun AppNavHost(
         )) {backStackEntry ->
             val username = backStackEntry.arguments?.getString("username")
             val password = backStackEntry.arguments?.getString("password")
-            Page2(nhanvienModel = NhanvienModel(username?:"", password?:""))
+            Page2(nhanvienModel = NhanvienModel(username?:"", password?:""), navController)
         }
     }
 }
