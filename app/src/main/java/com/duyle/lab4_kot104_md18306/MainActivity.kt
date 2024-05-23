@@ -33,6 +33,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.duyle.lab4_kot104_md18306.ui.theme.Lab4KOT104MD18306Theme
 
 class MainActivity : ComponentActivity() {
@@ -60,7 +62,9 @@ class MainActivity : ComponentActivity() {
             Lab4KOT104MD18306Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) {
 
-                    LoginScreen(startForResult)
+                    AppNavHost(navController = rememberNavController())
+
+                    //LoginScreen(startForResult)
 //                    Greeting(
 //                        name = "Android",
 //                        modifier = Modifier.padding(innerPadding)
@@ -73,7 +77,7 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun LoginScreen(startForResult: ActivityResultLauncher<Intent>) {
+fun LoginScreen(startForResult: ActivityResultLauncher<Intent>?, navController: NavHostController) {
     val context = LocalContext.current // getApplicationContext()
     var userName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -110,8 +114,10 @@ fun LoginScreen(startForResult: ActivityResultLauncher<Intent>) {
                 intent.putExtra(KEY_USERNAME, userName)
                 intent.putExtra(KEY_NHANVIEN_MODEL, nhanvienModel)
 
-                startForResult.launch(intent)
+                //startForResult?.launch(intent)
                 //context.startActivity(intent)
+
+                navController.navigate("${NavigationItem.Home.route}/$userName/$password")
 
             } else {
                 Toast.makeText(
